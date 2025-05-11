@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tap & Earn</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+        }
+        #balance {
+            font-size: 26px;
+            margin-bottom: 30px;
+        }
+        .earn-btn {
+            font-size: 20px;
+            padding: 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            margin: 20px;
+        }
+        .section {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <!-- Monetag SDK -->
+    <script src='//whephiwums.com/sdk.js' data-zone='9320572' data-sdk='show_9320572'></script>
+</head>
+<body>
+
+    <div id="balance">Balance: ₦0.00</div>
+
+    <!-- Section 1: Tap & Earn ₦5 -->
+    <div class="section">
+        <div class="section-title">Tap & Earn ₦5</div>
+        <button class="earn-btn" onclick="earn5()">₦</button>
+    </div>
+
+    <!-- Section 2: Watch Ad to Earn ₦100 -->
+    <div class="section">
+        <div class="section-title">Watch Ad to Earn ₦100</div>
+        <button class="earn-btn" onclick="earn100()">₦</button>
+    </div>
+
+    <script>
+        // Load and display saved balance
+        let balance = parseFloat(localStorage.getItem("balance")) || 0;
+        function updateBalance() {
+            document.getElementById("balance").innerText = "Balance: ₦" + balance.toFixed(2);
+            localStorage.setItem("balance", balance);
+        }
+        updateBalance();
+
+        // Earn ₦5 via tap + ad
+        function earn5() {
+            if (typeof show_9320572 === "function") {
+                show_9320572().then(() => {
+                    balance += 5;
+                    updateBalance();
+                    alert("You earned ₦5!");
+                }).catch((err) => {
+                    console.error("Ad failed:", err);
+                    alert("Ad failed. Try again.");
+                });
+            } else {
+                alert("Ad not ready yet. Please wait.");
+            }
+        }
+
+        // Earn ₦100 via ad only
+        function earn100() {
+            if (typeof show_9320572 === "function") {
+                show_9320572().then(() => {
+                    balance += 100;
+                    updateBalance();
+                    alert("You earned ₦100!");
+                }).catch((err) => {
+                    console.error("Ad failed:", err);
+                    alert("Ad failed. Try again.");
+                });
+            } else {
+                alert("Ad not ready yet. Please wait.");
+            }
+        }
+    </script>
+
+</body>
+</html>
