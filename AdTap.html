@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tap and Earn</title>
+    <script src='//whephiwums.com/sdk.js' data-zone='9320572' data-sdk='show_9320572'></script>
+    <style>
+        body {
+            background-color: black;
+            color: green;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+        #balance {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        #tapButton {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: green;
+            color: black;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="balance">Balance: ₦0.00</div>
+    <button id="tapButton">TAP</button>
+
+    <script>
+        // Load balance from localStorage
+        let balance = parseFloat(localStorage.getItem("balance")) || 0;
+        const balanceDisplay = document.getElementById("balance");
+
+        function updateBalanceDisplay() {
+            balanceDisplay.innerText = `Balance: ₦${balance.toFixed(2)}`;
+        }
+
+        updateBalanceDisplay();
+
+        document.getElementById("tapButton").addEventListener("click", function () {
+            show_9320572().then(() => {
+                // Reward the user after ad view
+                balance += 0.1;
+                localStorage.setItem("balance", balance.toFixed(2));
+                updateBalanceDisplay();
+                alert("You earned ₦0.1!");
+            }).catch(() => {
+                alert("Ad failed to load. Please try again.");
+            });
+        });
+    </script>
+</body>
+</html>
